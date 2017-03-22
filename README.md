@@ -7,11 +7,11 @@
 * dh.ics.perm.ru/flexberry/hwsb — docker-образ сервисной шины Highway Service Bus;
 * dh.ics.perm.ru/flexberry/servicebuseditor -   docker-образ редактора сервисной шины.
 
-Кроме этого для работы с базой данных сервисной шины используется образ dh.ics.perm.ru/kaf/alt.p8-postgresql9.6-ru с именованным томом postgresql-hwsb,содержащим postgres базу данных FlexberryHWSB с пользователем flexberry_orm_tester.
+Кроме этого для работы с базой данных сервисной шины используется образ `dh.ics.perm.ru/kaf/alt.p8-postgresql9.6-ru` с именованным томом `postgresql-hwsb`,содержащим postgres базу данных `FlexberryHWSB` с пользователем `flexberry_orm_tester`.
 
 ### Docker-образ сервисной шины dh.ics.perm.ru/flexberry/hwsb
 
-Docker-образ dh.ics.perm.ru/flexberry/hwsb построен на основе образа dh.ics.perm.ru/kaf/alt.p8-mono4 с добавлением пользователя highway (uid:504, gid:504) и каталога flexberry-hwsb, содержащего код сервисной шины. Каталог  flexberry-hwsb располагается в каталоге /opt/ файловой системы образа.
+Docker-образ `dh.ics.perm.ru/flexberry/hwsb` построен на основе образа dh.ics.perm.ru/kaf/alt.p8-mono4 с добавлением пользователя highway (uid:504, gid:504) и каталога flexberry-hwsb, содержащего код сервисной шины. Каталог  flexberry-hwsb располагается в каталоге /opt/ файловой системы образа.
 
 При запуске контейнера вызывается shell-скрипт /opt/startFlexberry-hwsb.sh:
 ```

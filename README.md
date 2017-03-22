@@ -1,6 +1,6 @@
 # docker
 
-## Docker-образы сервисной шины Highway Service Bus
+## Docker-образы сервисной шины `Highway Service Bus`
 
 
 Стек docker-сервисов сервисной шины Highway Service Bus включает в себя два docker-образа:
@@ -9,7 +9,7 @@
 
 Кроме этого для работы с базой данных сервисной шины используется образ `dh.ics.perm.ru/kaf/alt.p8-postgresql9.6-ru` с именованным томом `postgresql-hwsb`,содержащим postgres базу данных `FlexberryHWSB` с пользователем `flexberry_orm_tester`.
 
-### Docker-образ сервисной шины dh.ics.perm.ru/flexberry/hwsb
+### Docker-образ сервисной шины `dh.ics.perm.ru/flexberry/hwsb`
 
 Docker-образ `dh.ics.perm.ru/flexberry/hwsb` построен на основе образа `dh.ics.perm.ru/kaf/alt.p8-mono4` с добавлением пользователя `highway` (uid:504, gid:504) и каталога `flexberry-hwsb/`, содержащего код сервисной шины. Данный каталог   располагается в каталоге `/opt/` файловой системы образа.
 
@@ -31,7 +31,7 @@ Host=FlexberryHWSBPostgres;Port=5432;Database=flexberryhwsb;User ID=flexberry_or
 
 Для изменения параметров конфигурации при запуске контейнера можно заместить данный файл конфигурации файлом конфигурации, расположенном на HOST-системе.
 
-### Docker-образ редактора сервисной шины dh.ics.perm.ru/flexberry/servicebuseditor
+### Docker-образ редактора сервисной шины `dh.ics.perm.ru/flexberry/servicebuseditor`
 
 Docker-образ `dh.ics.perm.ru/flexberry/hwsb` построен на основе того же образа `dh.ics.perm.ru/kaf/alt.p8-mono4` с добавлением  файла `/etc/httpd2/conf/sites-available/vhosts.conf` конфигурации виртуального apache-хоста и 
 каталога `/var/www/vhosts/ServiceBusEditor/`  содержащего код редактора.
@@ -68,7 +68,7 @@ Host=FlexberryHWSBPostgres;Port=5432;Database=flexberryhwsb;User ID=flexberry_or
 
 Для изменения параметров конфигурации при запуске контейнера можно заместить данный файл конфигурации файлом конфигурации, расположенном на HOST-системе.
 
-### Docker-образ базы данных
+### Docker-образ базы данных `dh.ics.perm.ru/kaf/alt.p8-postgresql9.6-ru`
 
 Для работы с базой данных используется образ  `dh.ics.perm.ru/kaf/alt.p8-postgresql9.6-ru` с именованным томом базы  `postgresql-hwsb`.
 Начальная (пустая) база данных `flexberryhwsb` содержится в файл-архиве `postgresql-hwsb.tgz`.
@@ -80,11 +80,11 @@ Host=FlexberryHWSBPostgres;Port=5432;Database=flexberryhwsb;User ID=flexberry_or
 
 При запуске именованный том `postgresql-hwsb` монтируется на каталог `/var/lib/pgsql/data/` контейнера.
 
-### Запуск стека сервисов  сервисной шины Highway Service Bus
+### Запуск стека сервисов  сервисной шины `Highway Service Bus`
 
-#### Запуск сервисов в стандартном noswarm режиме
+#### Запуск сервисов в стандартном `noswarm` режиме
 
-##### Запуск сервиса FlexberryHWSBPostgres
+##### Запуск сервиса `FlexberryHWSBPostgres`
 
 Для запуска сервиса необходимо определить конфигурационный файлы `hg_hba.conf` и `postgresql.conf`  в каталоге 
 `/etc/icsDockerCluster/confs/noswarm/postgresql-hwsb/conf/`.
@@ -151,7 +151,7 @@ docker run -d \
 - v /etc/icsDockerCluster/confs/noswarm/hwsb/NewPlatform.Flexberry.HighwaySB.WinServiceHost.exe.config:/opt/flexberry-hwsb/NewPlatform.Flexberry.HighwaySB.WinServiceHost.exe.config
 ```
 
-##### Запуск сервиса ServiceBusEditor
+##### Запуск сервиса `ServiceBusEditor`
 
 Запуск сервиса осуществляется командой:
 ```
@@ -208,7 +208,7 @@ docker run -d \
 # ssh  10.130.5.96  docker run --name HWSB ...
 ```
 
-#### Запуск сервисов в swarm-кластере
+#### Запуск сервисов в `swarm-кластере`
 
 Запуск вышеописанных образов как сервисов в режиме `docker swarm` позволяет поддержать новые возможности:
 
@@ -219,14 +219,14 @@ docker run -d \
 * возможность масштабирования сервиса `ServiceBusEditor` на одном или нескольких узлов кластера;
 * автоматическая балансировака нагрузки на масштабированный сервис `ServiceBusEditor`.
 
-Режим `docker swarm` поддерживается в версиях docker >=1.12 (август 2016 года).
-До версии 1.13 (январь 2017-го) запуск сервисов возможен путем вызова команды:
+Режим `docker swarm` поддерживается в версиях docker `>=1.12` (август 2016 года).
+До версии `1.13` (январь 2017-го) запуск сервисов возможен путем вызова команды:
 ```
 docker service create [OPTIONS] IMAGE [COMMAND] [ARG...] 
 ```
 на manager-узле кластера.
 
-Версии 1.13 и старше docker поддерживают режим запуска множества (stack) связанных сервисов, описанных в файле конфигурации `composeFileName` командой:
+Версии `1.13` и старше docker поддерживают режим запуска множества (`stack`) связанных сервисов, описанных в файле конфигурации `composeFileName` командой:
 ```
 docker stack deploy --compose-file composeFileName stackName
 ```

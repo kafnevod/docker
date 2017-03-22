@@ -231,7 +231,22 @@ docker service create [OPTIONS] IMAGE [COMMAND] [ARG...]
 docker stack deploy --compose-file composeFileName stackName
 ```
 
+##### Создание внутренней сети
+
+
+
 ##### Независимый запуск с сервисов через `docker service create`
+
+###### Запуск сервиса FlexberryHWSBPostgres
+
+
+
+###### Запуск сервиса HWSB
+
+
+
+###### Запуск сервиса ServiceBusEditor
+
 
 
 

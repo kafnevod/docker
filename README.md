@@ -24,7 +24,7 @@ wait $!
 
 Файл конфигурации сервиса
 `/opt/flexberry-hwsb/NewPlatform.Flexberry.HighwaySB.WinServiceHost.exe.config`
-содержит строку соединения с базой данных, расположенной в домене `FlexberryHWSBPostgres`:
+содержит строку соединения с базой данных, расположенной по сетевому имени`FlexberryHWSBPostgres`:
 ```
 Host=FlexberryHWSBPostgres;Port=5432;Database=flexberryhwsb;User ID=flexberry_orm_tester;Password=sa3dfE;
 ```
@@ -154,6 +154,23 @@ docker run -d \
 ```
 - v /etc/icsDockerCluster/confs/noswarm/hwsb/NewPlatform.Flexberry.HighwaySB.WinServiceHost.exe.config:/opt/flexberry-hwsb/NewPlatform.Flexberry.HighwaySB.WinServiceHost.exe.config
 ```
+Параметры 
+```
+      -p 7075:7075 \
+      -p 7085:7085 \
+```
+привязывают внешние порты `7075`, `7085` к соответствующим внутренним портам контейнера. В случае, если указанные внешние порты заняты  можно указать другие свободные порты `HOST-системы`.
+
+Параметр 
+```
+      --add-host FlexberryHWSBPostgres:x.x.x.x \
+```
+(где x.x.x.x - адрес узла на котором запущен контейнер базы данных `FlexberryHWSBPostgres`) добавляет в файл /etc/host
+запускаемого контейнера `HWSB` строку:
+```
+x.x.x.x FlexberryHWSBPostgres
+```
+которая обечпечивает трасляцию сетевого имени `FlexberryHWSBPostgres` в IP-адрес `x.x.x.x` при обращении ПО контейнера по сетевому имени (см. параметр `Host=FlexberryHWSBPostgres` файла конфигурации `NewPlatform.Flexberry.HighwaySB.WinServiceHost.exe.config`). 
 
 ##### Запуск сервиса `ServiceBusEditor`
 
@@ -260,6 +277,46 @@ docker network create \
 
 ###### Запуск сервиса FlexberryHWSBPostgres
 
+Для запуска сервиса необходимо определить конфигурационный файлы `hg_hba.conf` и `postgresql.conf`  в каталоге 
+`/etc/icsDockerCluster/confs/swarm/postgresql-hwsb/conf/`.
+
+В файле `hb_hba.conf`  должна присутствовать строка:
+```
+host    all             all             192.168.1.0/27           md5
+```
+Где  `192.168.1.0/27` — адрес локальной внутренней сети `HWSBNet` и сетевая маска, в которой располагаются запускаемые контейнеры.
+
+Файл  `postgresql.conf` должен содержать строку
+```
+listen_addresses = '*'
+```
+обеспечивающий прослушивание запросов по всем сетевым интерфейсам.
+
+Строка запуска контейнера выглядит следующим образом:
+```
+docker service create \
+        --name FlexberryHWSBPostgres \
+        --network HWSBNet \
+        --mount type=volume,source=postgresql-hwsb,destination=/var/lib/pgsql/data/ \
+        --mount type=bind,source=/etc/icsDockerCluster/confs/swarm/postgresql-hwsb/conf/,destination=/conf \
+        --constraint "node.hostname == pm_db.node" \
+        dh.ics.perm.ru/kaf/alt.p8-postgresql9.6-ru
+```
+Параметр
+```
+ -mount type=volume,source=postgresql-hwsb,destination=/var/lib/pgsql/data/
+```
+обеспечивает монтирование каталога `/var/lib/pgsql/data/` контейнера на именованный том  `postgresql-hwsb` (см. выше).
+
+Параметр
+```
+  --mount type=bind,source=/etc/icsDockerCluster/confs/swarm/postgresql-hwsb/conf/,destination=/conf
+```
+обеспечивает монтирование каталога файлов `hg_hba.conf`, `postgresql.conf` конфигурации postgres на каталог `/conf/` контейнера.
+
+Обратите внимание, так как в доступе к базе данных данного сервиса из внешней сети нет необходимости проброс порта 5432 
+во внешнюю сеть отсутствует. Доступ к этому порту возможен только из сервисов подключенных к сети `HWSBNet`.
+При запуске сервиса внутренний DNS сервер сети `HWSBNet` привязывает имя сервиса `FlexberryHWSBPostgres` к IP-адресу сервиса базы данных. Так что при запуске сервисов `HWSP`, `ServiceBusEditor` нет 
 
 
 ###### Запуск сервиса HWSB

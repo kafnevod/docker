@@ -165,7 +165,7 @@ docker run -d \
 ```
       --add-host FlexberryHWSBPostgres:x.x.x.x \
 ```
-(где x.x.x.x - адрес узла на котором запущен контейнер базы данных `FlexberryHWSBPostgres`) добавляет в файл /etc/host
+(где x.x.x.x - адрес узла на котором запущен контейнер базы данных `FlexberryHWSBPostgres`) добавляет в файл `/etc/host`
 запускаемого контейнера `HWSB` строку:
 ```
 x.x.x.x FlexberryHWSBPostgres
@@ -198,7 +198,7 @@ x.x.x.x FlexberryHWSBPostgres
 ```
       --add-host FlexberryHWSBPostgres:x.x.x.x \
 ```
-(где x.x.x.x - адрес узла на котором запущен контейнер базы данных `FlexberryHWSBPostgres`) добавляет в файл /etc/host
+(где x.x.x.x - адрес узла на котором запущен контейнер базы данных `FlexberryHWSBPostgres`) добавляет в файл `/etc/host`
 запускаемого контейнера `ServiceBusEditor` строку:
 ```
 x.x.x.x FlexberryHWSBPostgres

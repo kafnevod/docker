@@ -188,6 +188,22 @@ x.x.x.x FlexberryHWSBPostgres
 ```
 -v /etc/icsDockerCluster/confs/noswarm/servicebuseditor/Web.config:/var/www/vhosts/ServiceBusEditor/Web.config
 ```
+Параметр
+```
+      -p 7080:80 \
+```
+привязывает внешний порт `7080` к внутреннему порту `80` контейнера. В случае, если внешний порт `7080` занят  можно указать другие свободныё порт `HOST-системы`.
+
+Параметр 
+```
+      --add-host FlexberryHWSBPostgres:x.x.x.x \
+```
+(где x.x.x.x - адрес узла на котором запущен контейнер базы данных `FlexberryHWSBPostgres`) добавляет в файл /etc/host
+запускаемого контейнера `ServiceBusEditor` строку:
+```
+x.x.x.x FlexberryHWSBPostgres
+```
+которая обечпечивает трасляцию сетевого имени `FlexberryHWSBPostgres` в IP-адрес `x.x.x.x` при обращении ПО контейнера по сетевому имени (см. параметр `Host=FlexberryHWSBPostgres` файла конфигурации `Web.config`). 
 
 ##### Пример запуска всех сервисов
 

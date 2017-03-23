@@ -31,6 +31,8 @@ Host=FlexberryHWSBPostgres;Port=5432;Database=flexberryhwsb;User ID=flexberry_or
 
 Для изменения параметров конфигурации при запуске контейнера можно заместить данный файл конфигурации файлом конфигурации, расположенном на HOST-системе.
 
+На текущий момент docker-образ `dh.ics.perm.ru/flexberry/hwsb` (`dh.ics.perm.ru/flexberry/hwsb:latest`) является алиасом образа версии 2.0.0 `dh.ics.perm.ru/flexberry/hwsb:2.0.0`. В дальнейшем возможно появление образов следующих версий. Если Вам необходимо запустить образ определенной версии (например версию 2.0.0) необходимо при вызове указывать полное имя образа (`dh.ics.perm.ru/flexberry/hwsb:2.0.0`).
+
 ### Docker-образ редактора сервисной шины `dh.ics.perm.ru/flexberry/servicebuseditor`
 
 Docker-образ `dh.ics.perm.ru/flexberry/hwsb` построен на основе того же образа `dh.ics.perm.ru/kaf/alt.p8-mono4` с добавлением  файла `/etc/httpd2/conf/sites-available/vhosts.conf` конфигурации виртуального apache-хоста и 

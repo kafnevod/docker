@@ -213,11 +213,11 @@ docker run -d \
 ```
 или путем удаленного входа на другой узел кластера 
 ```
-ssh 10.130.5.96
+# ssh 10.130.5.96
 ```
 и запуска контейнера на этом узле
 ```
-docker run --name HWSB ...
+# docker run --name HWSB ...
 ```
 
 #### Запуск сервисов в `swarm-кластере`
@@ -234,13 +234,13 @@ docker run --name HWSB ...
 Режим `docker swarm` поддерживается в версиях docker `>=1.12` (август 2016 года).
 До версии `1.13` (январь 2017-го) запуск сервисов возможен путем вызова команды:
 ```
-docker service create [OPTIONS] IMAGE [COMMAND] [ARG...] 
+# docker service create [OPTIONS] IMAGE [COMMAND] [ARG...] 
 ```
 на manager-узле кластера.
 
 Версии `1.13` и старше docker поддерживают режим запуска множества (`stack`) связанных сервисов, описанных в файле конфигурации `composeFileName` командой:
 ```
-docker stack deploy --compose-file composeFileName stackName
+# docker stack deploy --compose-file composeFileName stackName
 ```
 
 ##### Создание внутренней overlay-сети
